@@ -18,6 +18,7 @@ interface DroneState {
   connect: () => void;
   disconnect: () => void;
   flyTo: (id: DroneId) => void;
+  clearSelection: () => void;
   highlight: (id: DroneId | null) => void;
 }
 
@@ -156,6 +157,7 @@ export const useDroneStore = create<DroneState>((set, get) => {
       }
     },
     flyTo: (id: DroneId) => set({ selectedId: id }),
+    clearSelection: () => set({ selectedId: null }),
     highlight: (id: DroneId | null) => set({ highlightedId: id }),
   };
 });

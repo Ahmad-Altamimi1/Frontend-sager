@@ -11,7 +11,7 @@ export default function SidebarLayout() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
-    <div className="h-[calc(100vh-72px)] overflow-hidden bg-[#0A0A0A]">
+    <div className="h-[calc(100vh-90px)] overflow-hidden bg-[#0A0A0A]">
       {/* Mobile Header */}
       <div className="lg:hidden bg-[#111111] border-b border-zinc-800 p-4 flex items-center justify-between">
         <button
@@ -20,7 +20,9 @@ export default function SidebarLayout() {
         >
           <Menu size={20} className="text-zinc-300" />
         </button>
-        <h1 className="text-lg font-semibold text-white">Sager Live</h1>
+        <h1 className="text-lg font-semibold text-white">
+          {isMap ? "Map" : "Dashboard"}
+        </h1>
         <div className="w-10" /> {/* Spacer for centering */}
       </div>
 
@@ -32,7 +34,7 @@ export default function SidebarLayout() {
           "lg:hidden fixed top-0 left-0 h-full w-72 transform",
           sidebarOpen ? "translate-x-0" : "-translate-x-full",
           // Desktop: always visible, 2 columns
-          "lg:relative lg:col-span-2 lg:transform-none lg:h-[calc(100vh-72px)]"
+          "lg:relative lg:col-span-2 lg:transform-none lg:h-[calc(100vh-90px)]"
         )}
       >
         {/* Mobile Sidebar Header */}
@@ -72,7 +74,7 @@ export default function SidebarLayout() {
               />
               <span
                 className={cn(
-                  "text-[15px] transition-colors duration-100 lg:hidden",
+                  "text-[15px] transition-colors duration-100 lg:hidden ",
                   isMap ? "text-[#65717C]" : "text-white"
                 )}
               >
@@ -112,7 +114,7 @@ export default function SidebarLayout() {
       {/* Responsive Layout */}
       <div className="lg:grid lg:grid-cols-[repeat(14,minmax(0,1fr))]">
         {/* Desktop Sidebar */}
-        <aside className="hidden lg:flex lg:col-span-2 lg:h-[calc(100vh-72px)] bg-[#111111] backdrop-blur border-r border-zinc-800 z-40  flex-col">
+        <aside className="hidden lg:flex lg:col-span-2 lg:h-[calc(100vh-90px)] bg-[#111111] backdrop-blur border-r border-zinc-800 z-40  flex-col">
           <nav className="flex-1 flex flex-col gap-2 pt-3">
             <Link to="/" className="group" aria-label="Dashboard">
               <div
@@ -132,7 +134,12 @@ export default function SidebarLayout() {
                     isMap ? "text-[#65717C]" : "text-white"
                   )}
                 />
-                <span className="text-[15px] transition-colors duration-100 hidden lg:block">
+                <span
+                  className={cn(
+                    "text-[15px] transition-colors duration-100 hidden lg:block",
+                    isMap ? "text-[#65717C]" : "text-white"
+                  )}
+                >
                   DASHBOARD
                 </span>
               </div>
@@ -145,7 +152,12 @@ export default function SidebarLayout() {
                 )}
               >
                 <img src={MapIcon} alt="Map" className="h-6 w-6" />
-                <span className="text-[15px] transition-colors duration-100 hidden lg:block">
+                <span
+                  className={cn(
+                    "text-[15px] transition-colors duration-100 hidden lg:block",
+                    !isMap ? "text-[#65717C]" : "text-white"
+                  )}
+                >
                   MAP
                 </span>
                 {isMap && (

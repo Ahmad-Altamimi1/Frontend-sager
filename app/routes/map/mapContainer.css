@@ -7,7 +7,7 @@
 }
 
 #map-container {
-  height: calc(100vh - 72px);
+  height: calc(100vh - 90px);
   width: 100%;
   position: relative;
   background-color: bisque;

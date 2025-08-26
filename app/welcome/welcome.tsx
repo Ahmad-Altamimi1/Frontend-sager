@@ -1,47 +1,279 @@
-import logoDark from "./logo-dark.svg";
-import logoLight from "./logo-light.svg";
+import logoLight from "~assets/Icon/SagerLogo.svg";
 import { Link } from "react-router";
+import { motion } from "framer-motion";
 
 export function Welcome() {
   return (
-    <main className="h-[calc(100vh-72px)] bg-zinc-950 text-zinc-100 flex items-center justify-center">
-      <div className="max-w-4xl w-full px-6">
+    <main className="min-h-screen bg-zinc-950 text-zinc-100 flex items-center justify-center overflow-hidden">
+      <div className="max-w-6xl w-full px-6 relative">
+        {/* Animated background drones */}
+        <div className="absolute inset-0 pointer-events-none">
+          <motion.div
+            className="absolute top-20 left-10 text-blue-400 opacity-20"
+            animate={{
+              x: [0, 100, 0],
+              y: [0, -50, 0],
+              rotate: [0, 360],
+            }}
+            transition={{
+              duration: 8,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+          >
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
+            </svg>
+          </motion.div>
+
+          <motion.div
+            className="absolute top-40 right-20 text-green-400 opacity-20"
+            animate={{
+              x: [0, -80, 0],
+              y: [0, 60, 0],
+              rotate: [0, -360],
+            }}
+            transition={{
+              duration: 12,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+          >
+            <svg width="35" height="35" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
+            </svg>
+          </motion.div>
+
+          <motion.div
+            className="absolute bottom-40 left-1/4 text-red-400 opacity-20"
+            animate={{
+              x: [0, 60, 0],
+              y: [0, -40, 0],
+              rotate: [0, 180],
+            }}
+            transition={{
+              duration: 10,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+          >
+            <svg width="30" height="30" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
+            </svg>
+          </motion.div>
+        </div>
+
         <div className="flex items-center justify-between">
           <div className="w-40">
             <img src={logoLight} alt="Sager" className="block w-full" />
           </div>
           <Link to="/map" className="inline-flex">
-            <span className="inline-flex items-center gap-2 rounded-md bg-zinc-800 px-4 py-2 text-sm hover:bg-zinc-700 transition-colors">
-              Open Map
-            </span>
+            <motion.span
+              className="inline-flex items-center gap-2 rounded-md bg-zinc-800 px-4 py-2 text-sm hover:bg-zinc-700 transition-colors"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              🚁 Open Map
+            </motion.span>
           </Link>
         </div>
-        <div className="mt-16 grid grid-cols-1 md:grid-cols-2 gap-8">
-          <div className="space-y-3">
-            <h1 className="text-3xl font-semibold">Drone Tracing System</h1>
-            <p className="text-zinc-300">
+
+        <div className="mt-16 grid grid-cols-1 lg:grid-cols-2 gap-12">
+          <div className="space-y-6">
+            <motion.h1
+              className="text-4xl font-bold bg-gradient-to-r from-blue-400 via-green-400 to-purple-400 bg-clip-text text-transparent"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+            >
+              Drone Tracing System
+            </motion.h1>
+
+            <motion.p
+              className="text-zinc-300 text-lg leading-relaxed"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+            >
               Monitor live drones, their flight paths and status in real time.
-              Built with Mapbox, Tailwind and smooth animations.
-            </p>
+              Built with cutting-edge technology including Mapbox, Tailwind and
+              smooth animations.
+            </motion.p>
+
+            {/* Interactive demo section */}
+            <motion.div
+              className="mt-8 p-6 rounded-xl border border-zinc-800 bg-zinc-900/50 backdrop-blur-sm"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.4 }}
+            >
+              <h3 className="text-lg font-semibold mb-4 text-blue-400">
+                🚀 Live Demo
+              </h3>
+
+              {/* Simulated drone status */}
+              <div className="space-y-3">
+                <div className="flex items-center justify-between p-3 rounded-lg bg-zinc-800/50 border border-zinc-700">
+                  <div className="flex items-center gap-3">
+                    <motion.div
+                      className="w-3 h-3 rounded-full bg-green-400"
+                      animate={{ scale: [1, 1.2, 1] }}
+                      transition={{ duration: 2, repeat: Infinity }}
+                    />
+                    <span className="text-sm">Drone Alpha-1</span>
+                  </div>
+                  <span className="text-xs text-green-400">🟢 Active</span>
+                </div>
+
+                <div className="flex items-center justify-between p-3 rounded-lg bg-zinc-800/50 border border-zinc-700">
+                  <div className="flex items-center gap-3">
+                    <motion.div
+                      className="w-3 h-3 rounded-full bg-red-400"
+                      animate={{ scale: [1, 1.2, 1] }}
+                      transition={{ duration: 1.5, repeat: Infinity }}
+                    />
+                    <span className="text-sm">Drone Beta-2</span>
+                  </div>
+                  <span className="text-xs text-red-400">🔴 Restricted</span>
+                </div>
+
+                <div className="flex items-center justify-between p-3 rounded-lg bg-zinc-800/50 border border-zinc-700">
+                  <div className="flex items-center gap-3">
+                    <motion.div
+                      className="w-3 h-3 rounded-full bg-blue-400"
+                      animate={{ scale: [1, 1.2, 1] }}
+                      transition={{ duration: 2.5, repeat: Infinity }}
+                    />
+                    <span className="text-sm">Drone Gamma-3</span>
+                  </div>
+                  <span className="text-xs text-blue-400">🔵 Monitoring</span>
+                </div>
+              </div>
+            </motion.div>
           </div>
-          <div className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-4">
-            <div className="text-sm text-zinc-300">Quick Links</div>
-            <ul className="mt-3 space-y-2 text-sm">
-              {resources.map(({ href, text }) => (
-                <li key={href}>
-                  <a
-                    href={href}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="text-blue-400 hover:underline"
+
+          <div className="space-y-6">
+            {/* Interactive map preview */}
+            <motion.div
+              className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-6 h-80 relative overflow-hidden"
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, delay: 0.3 }}
+            >
+              <div className="absolute inset-0 bg-gradient-to-br from-blue-900/20 to-purple-900/20" />
+
+              {/* Simulated map grid */}
+              <div className="absolute inset-0 opacity-20">
+                <div
+                  className="w-full h-full"
+                  style={{
+                    backgroundImage: `
+                    linear-gradient(rgba(59, 130, 246, 0.1) 1px, transparent 1px),
+                    linear-gradient(90deg, rgba(59, 130, 246, 0.1) 1px, transparent 1px)
+                  `,
+                    backgroundSize: "20px 20px",
+                  }}
+                />
+              </div>
+
+              {/* Animated flight path */}
+              <svg
+                className="absolute inset-0 w-full h-full"
+                viewBox="0 0 400 300"
+              >
+                <motion.path
+                  d="M50,150 Q100,50 200,100 T350,150"
+                  fill="none"
+                  stroke="url(#gradient)"
+                  strokeWidth="3"
+                  strokeDasharray="10,5"
+                  initial={{ pathLength: 0 }}
+                  animate={{ pathLength: 1 }}
+                  transition={{
+                    duration: 3,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                  }}
+                />
+                <defs>
+                  <linearGradient
+                    id="gradient"
+                    x1="0%"
+                    y1="0%"
+                    x2="100%"
+                    y2="0%"
                   >
-                    {text}
-                  </a>
-                </li>
-              ))}
-            </ul>
+                    <stop offset="0%" stopColor="#3b82f6" />
+                    <stop offset="50%" stopColor="#10b981" />
+                    <stop offset="100%" stopColor="#8b5cf6" />
+                  </linearGradient>
+                </defs>
+              </svg>
+
+              {/* Floating drone icons */}
+              <motion.div
+                className="absolute top-20 left-16 text-blue-400"
+                animate={{
+                  y: [0, -10, 0],
+                  rotate: [0, 5, -5, 0],
+                }}
+                transition={{
+                  duration: 4,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                }}
+              >
+                <svg
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                >
+                  <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
+                </svg>
+              </motion.div>
+
+              <motion.div
+                className="absolute bottom-20 right-20 text-green-400"
+                animate={{
+                  y: [0, 10, 0],
+                  rotate: [0, -5, 5, 0],
+                }}
+                transition={{
+                  duration: 3,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                }}
+              >
+                <svg
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                >
+                  <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
+                </svg>
+              </motion.div>
+
+              <div className="absolute bottom-4 left-4 text-xs text-zinc-400">
+                Interactive Map Preview
+              </div>
+            </motion.div>
           </div>
         </div>
+
+        {/* Bottom stats */}
+        <motion.div
+          className="mt-12 text-center text-zinc-400 text-sm"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.8, delay: 0.8 }}
+        >
+          <p>
+            🚁 Real-time drone monitoring • 📍 GPS tracking • 🎯 Flight path
+            visualization
+          </p>
+        </motion.div>
       </div>
     </main>
   );

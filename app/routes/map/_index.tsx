@@ -1,10 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
-import { Link } from "react-router";
 import { useDroneStore } from "~/store/droneStore";
-import { Button } from "~/components/ui/button";
 import { MapView } from "./components/MapView";
 import { DronePanel } from "./components/DronePanel";
-import { HoverOverlay } from "./components/HoverOverlay";
 import { motion } from "framer-motion";
 import { ChevronLeft } from "lucide-react";
 
@@ -17,6 +14,7 @@ const MapContainer = () => {
   const selectedId = useDroneStore((s) => s.selectedId);
   const highlight = useDroneStore((s) => s.highlight);
   const flyToStore = useDroneStore((s) => s.flyTo);
+  const clearSelection = useDroneStore((s) => s.clearSelection);
   const numRed = useDroneStore((s) => s.numRedDrones);
   const highlightedId = useDroneStore((s) => s.highlightedId);
   const list = useMemo(() => Object.values(drones), [drones]);
@@ -36,20 +34,21 @@ const MapContainer = () => {
   // Don't render the map container until we're on the client
   if (!isClient) {
     return (
-      <div className="w-full h-[calc(100vh-72px)] lg:h-[calc(100vh-72px)] bg-gray-100 flex items-center justify-center">
+      <div className="w-full h-[calc(100vh-90px)] lg:h-[calc(100vh-90px)] bg-gray-100 flex items-center justify-center">
         <div className="text-gray-500">Loading map...</div>
       </div>
     );
   }
 
   return (
-    <div className="relative w-full h-[calc(100vh-72px)] lg:h-[calc(100vh-72px)]">
+    <div className="relative w-full h-[calc(100vh-90px)] lg:h-[calc(100vh-90px)]">
       <MapView
         drones={drones}
         paths={paths}
         selectedId={selectedId}
         onHover={highlight}
         onClick={flyToStore}
+        onClearSelection={clearSelection}
       />
 
       <DronePanel
@@ -71,13 +70,13 @@ const MapContainer = () => {
       />
 
       {/* Hover tooltip on highlight: render simple overlay */}
-      {highlightedId && (
+      {/* {selectedId && (
         <HoverOverlay
-          name={drones[highlightedId]?.name ?? ""}
-          altitude={drones[highlightedId]?.altitude ?? 0}
-          createdAt={drones[highlightedId]?.createdAt ?? Date.now()}
+          name={drones[selectedId]?.name ?? ""}
+          altitude={drones[selectedId]?.altitude ?? 0}
+          createdAt={drones[selectedId]?.createdAt ?? Date.now()}
         />
-      )}
+      )} */}
 
       {/* Red drones counter - repositioned for mobile */}
       <div className="absolute bottom-4 right-4 z-10">

@@ -26,6 +26,7 @@ export interface MapViewProps {
   selectedId: string | null;
   onHover: (id: string | null) => void;
   onClick: (id: string) => void;
+  onClearSelection: () => void;
 }
 
 /**
@@ -40,6 +41,7 @@ export function MapView({
   selectedId,
   onClick,
   onHover,
+  onClearSelection,
 }: MapViewProps) {
   const mapRef = useRef<mapboxgl.Map | null>(null);
   const containerRef = useRef<HTMLDivElement | null>(null);
@@ -64,6 +66,17 @@ export function MapView({
       attributionControl: false,
     });
     mapRef.current.addControl(new mapboxgl.NavigationControl());
+
+    // Add click handler for empty space to clear selection
+    mapRef.current.on("click", (e) => {
+      // Check if the click is on a feature (drone)
+      const features = mapRef.current?.queryRenderedFeatures(e.point);
+      if (!features || features.length === 0) {
+        // Click is on empty space, clear selection
+        onClearSelection();
+        onHover(null); // Also clear hover state
+      }
+    });
 
     return () => {
       mapRef.current?.remove();

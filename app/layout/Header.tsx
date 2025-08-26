@@ -71,11 +71,6 @@ export default function Header() {
                 Front-end Developer
               </p>
             </div>
-
-            {/* User Avatar - Always visible */}
-            <div className="flex items-center justify-center w-7 h-7 sm:w-8 sm:h-8 lg:w-9 lg:h-9 bg-zinc-700 rounded-full border border-zinc-600">
-              <User className="h-3.5 w-3.5 sm:h-4 sm:w-4 lg:h-5 lg:w-5 text-zinc-300" />
-            </div>
           </div>
         </div>
       </div>
