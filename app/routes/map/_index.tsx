@@ -36,14 +36,14 @@ const MapContainer = () => {
   // Don't render the map container until we're on the client
   if (!isClient) {
     return (
-      <div className="w-full h-[calc(100vh-72px)] bg-gray-100 flex items-center justify-center">
+      <div className="w-full h-[calc(100vh-72px)] lg:h-[calc(100vh-72px)] bg-gray-100 flex items-center justify-center">
         <div className="text-gray-500">Loading map...</div>
       </div>
     );
   }
 
   return (
-    <div className="relative w-full h-[calc(100vh-72px)] ">
+    <div className="relative w-full h-[calc(100vh-72px)] lg:h-[calc(100vh-72px)]">
       <MapView
         drones={drones}
         paths={paths}
@@ -79,7 +79,7 @@ const MapContainer = () => {
         />
       )}
 
-      {/* Red drones counter */}
+      {/* Red drones counter - repositioned for mobile */}
       <div className="absolute bottom-4 right-4 z-10">
         <motion.div
           key={numRed}
@@ -95,6 +95,22 @@ const MapContainer = () => {
           </motion.span>
         </motion.div>
       </div>
+
+      {/* Mobile: Quick open button when panel is closed */}
+      {!panelOpen && (
+        <motion.div
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          className="lg:hidden absolute bottom-20 left-4 z-10"
+        >
+          <button
+            onClick={() => setPanelOpen(true)}
+            className="p-3 rounded-full bg-[#111111] border border-zinc-800 shadow-lg hover:bg-zinc-800 transition-colors"
+          >
+            <ChevronLeft size={20} className="text-white rotate-90" />
+          </button>
+        </motion.div>
+      )}
     </div>
   );
 };
