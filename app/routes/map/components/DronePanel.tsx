@@ -71,6 +71,7 @@ export function DronePanel({
       }
     );
   }, [highlightedId]);
+  console.log("drones", drones);
 
   return (
     <>
@@ -108,9 +109,7 @@ export function DronePanel({
             <div className="flex-1 flex flex-col">
               <div className="px-4 py-3 border-b border-zinc-800">
                 <div className="flex items-center justify-between">
-                  <h2 className="text-lg font-semibold text-white">
-                    Drone Flying ({drones.length})
-                  </h2>
+                  <span></span>
                   <button
                     onClick={onClose}
                     className="p-2 rounded-full bg-zinc-800 hover:bg-zinc-700 transition-colors"

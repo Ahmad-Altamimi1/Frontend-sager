@@ -69,29 +69,20 @@ const MapContainer = () => {
         }}
       />
 
-      {/* Hover tooltip on highlight: render simple overlay */}
-      {/* {selectedId && (
-        <HoverOverlay
-          name={drones[selectedId]?.name ?? ""}
-          altitude={drones[selectedId]?.altitude ?? 0}
-          createdAt={drones[selectedId]?.createdAt ?? Date.now()}
-        />
-      )} */}
-
-      {/* Red drones counter - repositioned for mobile */}
-      <div className="absolute bottom-4 right-4 z-10">
+      {/* notAllowed drones counter - repositioned for mobile */}
+      <div className="absolute bottom-[103%] right-1 md:bottom-4 md:right-4 z-10">
         <motion.div
           key={numRed}
-          className="flex items-center gap-2 rounded-full bg-zinc-900/90 backdrop-blur px-3 py-2 text-zinc-100 border border-zinc-800"
+          className="flex items-center gap-2 rounded-xl bg-[#D9D9D9] backdrop-blur p-1 md:px-3 md:py-2 text-[#3C4248]"
         >
-          <span className="text-xs">Red drones</span>
           <motion.span
-            className="text-sm font-semibold"
+            className=" text-sm font-semibold bg-[#1F2327] rounded-full text-white w-6 h-6 flex items-center justify-center"
             initial={{ scale: 0.9, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
           >
             {numRed}
           </motion.span>
+          <span className=" text-sm md:text-[16px]">Drone Flying</span>
         </motion.div>
       </div>
 

@@ -319,7 +319,6 @@ export function MapView({
       zoom: Math.max(12, map.getZoom()),
       speed: 0.8,
     });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedId]);
 
   return (

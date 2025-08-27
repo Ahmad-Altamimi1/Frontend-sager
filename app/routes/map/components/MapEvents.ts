@@ -33,6 +33,8 @@ export const handleHoverBindings = ({ map, popupRef }: MapEvents) => {
     border-radius:6px;
     position:relative;
     padding:8px 10px;
+    margin:0;
+    border:none;
   ">
     <!-- Title -->
     <div style="font-weight:600; font-size:13px; margin-bottom:6px;">
@@ -75,6 +77,7 @@ export const handleHoverBindings = ({ map, popupRef }: MapEvents) => {
         closeButton: false,
         closeOnClick: false,
         offset: 20,
+        className: "custom-popup",
       });
     }
 

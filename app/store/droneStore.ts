@@ -49,7 +49,7 @@ function toDrone(msg: IncomingDroneMessage): Drone {
   };
 }
 
-export const useDroneStore = create<DroneState>((set, get) => {
+export const useDroneStore = create<DroneState>((set) => {
   let socket: Socket | null = null;
 
   const updateCounts = (drones: Record<DroneId, Drone>) => {

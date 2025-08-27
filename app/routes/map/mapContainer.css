@@ -40,3 +40,16 @@
   border-radius: 10px;
   cursor: pointer;
 }
+
+/* Custom popup styling to remove white borders */
+.custom-popup .mapboxgl-popup-content {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+.custom-popup .mapboxgl-popup-tip {
+  border-top-color: black !important;
+}
