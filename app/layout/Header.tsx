@@ -59,10 +59,8 @@ export default function Header() {
               />
             </Button>
 
-            {/* Divider - Hidden on very small screens */}
             <div className="hidden sm:block w-px h-8 bg-zinc-700 mx-2 lg:mx-4" />
 
-            {/* User Profile - Responsive Text */}
             <div className="hidden sm:block text-sm">
               <p className="text-white">
                 Hello, <span className="font-semibold">Ahmad Al-Tamimi</span>

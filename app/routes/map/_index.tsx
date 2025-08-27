@@ -26,7 +26,6 @@ const MapContainer = () => {
   const highlightedId = useDroneStore((s) => s.highlightedId);
   const list = useMemo(() => Object.values(drones), [drones]);
   const [panelOpen, setPanelOpen] = useState(true);
-  console.log("paths", paths);
 
   useEffect(() => setIsClient(true), []);
 

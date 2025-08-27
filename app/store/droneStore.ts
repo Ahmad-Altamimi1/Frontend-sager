@@ -120,8 +120,6 @@ export const useDroneStore = create<DroneState>((set) => {
             payload.type === "FeatureCollection" &&
             Array.isArray(payload.features)
           ) {
-            console.log("payload.features", payload.features);
-
             for (const f of payload.features) {
               if (!f || f.type !== "Feature" || !f.geometry) continue;
               const props = f.properties || {};

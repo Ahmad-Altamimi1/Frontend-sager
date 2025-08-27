@@ -71,7 +71,6 @@ export function DronePanel({
       }
     );
   }, [highlightedId]);
-  console.log("drones", drones);
 
   return (
     <>

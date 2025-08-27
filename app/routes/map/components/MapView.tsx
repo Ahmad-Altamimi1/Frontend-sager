@@ -311,7 +311,6 @@ export function MapView({
 
     if (!map || !selectedId) return;
     const d = drones[selectedId];
-    console.log("Flying to drone:", d);
 
     if (!d) return;
     map.flyTo({
