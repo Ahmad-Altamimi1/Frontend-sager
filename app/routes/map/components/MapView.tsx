@@ -8,6 +8,8 @@ import {
   DEFAULT_ZOOM,
   MAP_STYLE,
   LAYER_IDS,
+  ARROW_SIZE,
+  DRONE_COLORS,
 } from "~/constants/map";
 import { MAPBOX_ACCESS_TOKEN } from "~/constants/env";
 import { isAllowed } from "~/store/droneStore";
@@ -129,7 +131,7 @@ export function MapView({
     const installLayersIfNeeded = () => {
       if (map.getLayer(LAYER_IDS.paths)) return; // already installed
 
-      const size = 15;
+      const size = ARROW_SIZE;
 
       // 1️⃣ Create yaw arrow icon from canvas
       const canvas = document.createElement("canvas");
@@ -147,7 +149,7 @@ export function MapView({
       ctx.fillStyle = "#000";
       ctx.fill();
 
-      // Add yaw arrow image (SDF for coloring)
+      //  1️⃣ Add yaw arrow image
       if (!map.hasImage("drone-arrow")) {
         map.addImage(
           "drone-arrow",
@@ -169,8 +171,8 @@ export function MapView({
           "line-color": [
             "case",
             ["==", ["get", "isAllowed"], true],
-            "#22c55e", // green if allowed
-            "#D90915", // red if not allowed
+            DRONE_COLORS.allowed,
+            DRONE_COLORS.notAllowed,
           ],
           "line-width": ["case", ["==", ["get", "id"], selectedId], 3, 2],
         },
@@ -185,16 +187,16 @@ export function MapView({
           "circle-color": [
             "case",
             ["==", ["get", "isAllowed"], true],
-            "#22c55e",
-            "#D90915",
+            DRONE_COLORS.allowed,
+            DRONE_COLORS.notAllowed,
           ],
           "circle-radius": ["case", ["==", ["get", "id"], selectedId], 8, 6],
           "circle-stroke-width": 9,
           "circle-stroke-color": [
             "case",
             ["==", ["get", "isAllowed"], true],
-            "#22c55e",
-            "#D90915",
+            DRONE_COLORS.allowed,
+            DRONE_COLORS.notAllowed,
           ],
         },
       });
@@ -236,8 +238,8 @@ export function MapView({
             "icon-color": [
               "case",
               ["==", ["get", "isAllowed"], true],
-              "#22c55e",
-              "#D90915",
+              DRONE_COLORS.allowed,
+              DRONE_COLORS.notAllowed,
             ],
           },
         });

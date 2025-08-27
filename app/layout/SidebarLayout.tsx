@@ -23,7 +23,7 @@ export default function SidebarLayout() {
         <h1 className="text-lg font-semibold text-white">
           {isMap ? "Map" : "Dashboard"}
         </h1>
-        <div className="w-10" /> {/* Spacer for centering */}
+        <div className="w-10" />
       </div>
 
       {/* Mobile Sidebar - No full overlay, just the sidebar itself */}
@@ -111,7 +111,6 @@ export default function SidebarLayout() {
         </nav>
       </aside>
 
-      {/* Responsive Layout */}
       <div className="lg:grid lg:grid-cols-[repeat(14,minmax(0,1fr))]">
         {/* Desktop Sidebar */}
         <aside className="hidden lg:flex lg:col-span-2 lg:h-[calc(100vh-90px)] bg-[#111111] backdrop-blur border-r border-zinc-800 z-40  flex-col">

@@ -69,7 +69,6 @@ export const handleHoverBindings = ({ map, popupRef }: MapEvents) => {
 
     currentFeature = feature;
     const activeDrone: DroneFeatureProps = feature.properties;
-    console.log("activeDrone", activeDrone);
 
     if (!popupRef.current) {
       popupRef.current = new mapboxgl.Popup({
@@ -83,10 +82,8 @@ export const handleHoverBindings = ({ map, popupRef }: MapEvents) => {
       .setLngLat(feature.geometry.coordinates ?? e.lngLat)
       .addTo(map);
 
-    // Initial popup content
     updatePopupContent(feature);
 
-    // Clear existing timer
     if (updateTimer) {
       clearInterval(updateTimer);
     }

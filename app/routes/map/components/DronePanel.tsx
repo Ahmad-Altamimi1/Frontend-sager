@@ -32,11 +32,18 @@ export function DronePanel({
   onSelect,
 }: DronePanelProps) {
   const listRef = useRef<HTMLDivElement | null>(null);
+  const mobileListRef = useRef<HTMLDivElement | null>(null);
   const [mobileExpanded, setMobileExpanded] = useState(false);
   const virtualizer = useVirtualizer({
     count: drones.length,
     estimateSize: () => 132,
     getScrollElement: () => listRef.current,
+    overscan: 1,
+  });
+  const mobileVirtualizer = useVirtualizer({
+    count: drones.length,
+    estimateSize: () => 132,
+    getScrollElement: () => mobileListRef.current,
     overscan: 1,
   });
   const items = virtualizer.getVirtualItems();
@@ -45,6 +52,18 @@ export function DronePanel({
   useEffect(() => {
     if (!listRef.current || !highlightedId) return;
     virtualizer.scrollToIndex(
+      drones.findIndex((d) => d.id === highlightedId),
+      {
+        align: "auto",
+        behavior: "smooth",
+      }
+    );
+  }, [highlightedId]);
+
+  // Scroll selected/highlighted into view for mobile
+  useEffect(() => {
+    if (!mobileListRef.current || !highlightedId) return;
+    mobileVirtualizer.scrollToIndex(
       drones.findIndex((d) => d.id === highlightedId),
       {
         align: "auto",
@@ -68,9 +87,12 @@ export function DronePanel({
               height: mobileExpanded ? "85vh" : "45vh",
             }}
           >
-            {/* Mobile Header with drag handle */}
+            {/* Mobile Header  */}
             <div className="relative h-12 flex items-center justify-center border-b border-zinc-800">
-              <div className="w-12 h-1 bg-zinc-600 rounded-full" />
+              <div
+                className="w-12 h-1 bg-zinc-600 rounded-full"
+                onClick={() => setMobileExpanded(!mobileExpanded)}
+              />
               <button
                 onClick={() => setMobileExpanded(!mobileExpanded)}
                 className="absolute right-4 p-2 rounded-full bg-zinc-800 hover:bg-zinc-700 transition-colors"
@@ -109,65 +131,84 @@ export function DronePanel({
                 />
               </div>
 
-              <ScrollArea className="flex-1 px-4 pb-4">
-                <div className="space-y-2">
-                  {drones.map((d) => {
+              <div
+                className="flex-1 px-4 pb-4 overflow-auto"
+                ref={mobileListRef}
+              >
+                <div
+                  className="relative space-y-2"
+                  style={{ height: `${mobileVirtualizer.getTotalSize()}px` }}
+                >
+                  {mobileVirtualizer.getVirtualItems().map((item) => {
+                    const d = drones[item.index];
                     const allowed = isAllowed(d.id);
                     const isHighlighted = highlightedId === d.id;
                     return (
                       <div
-                        key={d.id}
-                        data-id={d.id}
-                        className={
-                          "transition-all duration-200 p-3 cursor-pointer rounded-lg border " +
-                          (isHighlighted
-                            ? "bg-zinc-800 border-zinc-500 ring-1 ring-zinc-500"
-                            : "bg-[#1A1A1A] border-zinc-800 hover:bg-zinc-800 hover:border-zinc-700")
-                        }
-                        onClick={() => onSelect(d.id)}
+                        className="absolute top-0 left-0 w-full"
+                        key={item.key}
+                        data-index={item.index}
+                        style={{
+                          transform: `translateY(${item.start}px)`,
+                          width: "100%",
+                          height: `${item.size}px`,
+                        }}
                       >
-                        <div className="flex items-center justify-between mb-2">
-                          <div className="font-medium text-sm text-white">
-                            {d.name}
-                          </div>
-                          <span
-                            className={
-                              "inline-flex h-3 w-3 rounded-full border border-white " +
-                              (allowed ? "bg-[#5CFC00]" : "bg-[#F9000E]")
-                            }
-                          />
-                        </div>
-                        <div className="grid grid-cols-2 gap-x-3 gap-y-2 text-xs text-[#CCCCCC]">
-                          <div>
-                            <div className="opacity-70 text-[10px] uppercase tracking-wide">
-                              Serial
+                        <div
+                          data-id={d.id}
+                          className={
+                            "transition-all duration-200 p-3 cursor-pointer rounded-lg border " +
+                            (isHighlighted
+                              ? "bg-zinc-800 border-zinc-500 ring-1 ring-zinc-500"
+                              : "bg-[#1A1A1A] border-zinc-800 hover:bg-zinc-800 hover:border-zinc-700")
+                          }
+                          onClick={() => onSelect(d.id)}
+                        >
+                          <div className="flex items-center justify-between mb-2">
+                            <div className="font-medium text-sm text-white">
+                              {d.name}
                             </div>
-                            <div className="font-mono">#{d.serial}</div>
+                            <span
+                              className={
+                                "inline-flex h-3 w-3 rounded-full border border-white " +
+                                (allowed ? "bg-[#5CFC00]" : "bg-[#F9000E]")
+                              }
+                            />
                           </div>
-                          <div>
-                            <div className="opacity-70 text-[10px] uppercase tracking-wide">
-                              ID
+                          <div className="grid grid-cols-2 gap-x-3 gap-y-2 text-xs text-[#CCCCCC]">
+                            <div>
+                              <div className="opacity-70 text-[10px] uppercase tracking-wide">
+                                Serial
+                              </div>
+                              <div className="font-mono">#{d.serial}</div>
                             </div>
-                            <div className="font-mono text-[10px]">{d.id}</div>
-                          </div>
-                          <div>
-                            <div className="opacity-70 text-[10px] uppercase tracking-wide">
-                              Pilot
+                            <div>
+                              <div className="opacity-70 text-[10px] uppercase tracking-wide">
+                                ID
+                              </div>
+                              <div className="font-mono text-[10px]">
+                                {d.id}
+                              </div>
                             </div>
-                            <div>{d.pilot}</div>
-                          </div>
-                          <div>
-                            <div className="opacity-70 text-[10px] uppercase tracking-wide">
-                              Org
+                            <div>
+                              <div className="opacity-70 text-[10px] uppercase tracking-wide">
+                                Pilot
+                              </div>
+                              <div>{d.pilot}</div>
                             </div>
-                            <div>{d.organization}</div>
+                            <div>
+                              <div className="opacity-70 text-[10px] uppercase tracking-wide">
+                                Org
+                              </div>
+                              <div>{d.organization}</div>
+                            </div>
                           </div>
                         </div>
                       </div>
                     );
                   })}
                 </div>
-              </ScrollArea>
+              </div>
             </div>
           </motion.div>
         )}
@@ -175,13 +216,13 @@ export function DronePanel({
 
       {/* Desktop: Side panel */}
       <>
-        {/* Reopen handle - always visible when panel is closed */}
+        {/*  visible when panel is closed */}
         {!open && (
           <motion.div
             initial={{ x: -320, opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
             transition={{ duration: 0.3 }}
-            className="hidden lg:block absolute top-0 left-0 h-full w-12 bg-[#111111] border-r border-zinc-800 z-10 flex items-center justify-center"
+            className="hidden lg:flex absolute top-0 left-0 h-full w-12 bg-[#111111] border-r border-zinc-800 z-10  items-center justify-center"
           >
             <button
               onClick={onOpen}
