@@ -4,7 +4,14 @@ import { MapView } from "./components/MapView";
 import { DronePanel } from "./components/DronePanel";
 import { motion } from "framer-motion";
 import { ChevronLeft } from "lucide-react";
+import type { Route } from "./+types/_index";
 
+export function meta({}: Route.MetaArgs) {
+  return [
+    { title: "sager Drone Map" },
+    { name: "description", content: "Welcome to sager Drone Map!" },
+  ];
+}
 const MapContainer = () => {
   const [isClient, setIsClient] = useState(false);
   const connect = useDroneStore((s) => s.connect);
